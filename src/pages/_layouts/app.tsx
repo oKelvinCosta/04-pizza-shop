@@ -1,8 +1,34 @@
-import { Outlet } from "react-router-dom";
+import { isAxiosError } from "axios";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import Header from "@/components/Header";
+import { api } from "@/lib/Axios";
 
 export default function AppLayout() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const interceptorId = api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (isAxiosError(error)) {
+          const status = error.response?.status;
+          const code = error.response?.data.code;
+
+          if (status === 401 && code === "UNAUTHORIZED") {
+            // replace true = user can't go back to the sign-in page using the back button from the browser
+            navigate("/sign-in", { replace: true });
+          }
+        }
+      },
+    );
+
+    return () => {
+      api.interceptors.response.eject(interceptorId);
+    };
+  }, [navigate]);
+
   return (
     <div className="flex min-h-screen flex-col antialiased">
       <Header />

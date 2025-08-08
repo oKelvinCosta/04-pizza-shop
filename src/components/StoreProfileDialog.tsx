@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { getManagedRestaurant } from "@/api/GetManagedRestaurant";
+import {
+  getManagedRestaurant,
+  type GetManagedRestaurantResponse,
+} from "@/api/GetManagedRestaurant";
 import { updateProfile } from "@/api/UpdateProfile";
+import { queryClient } from "@/lib/ReactQuery";
 
 import { Button } from "./ui/button";
 import {
@@ -47,8 +51,46 @@ export default function StoreProfileDialog() {
   });
   //   user values because stay monitoring, defaultValues not
 
+  // using Optimistic Update (set the value before the mutation/backend)
+  function updateManagedRestaurantCache({
+    name,
+    description,
+  }: StoreProfileSchema) {
+    // Update another mutation from other component by the KEY
+    const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
+      "managed-restaurant",
+    ]);
+    if (cached && name !== null && description !== null)
+      queryClient.setQueryData<GetManagedRestaurantResponse>(
+        ["managed-restaurant"],
+        {
+          ...cached,
+          name,
+          description,
+        },
+      );
+
+    // Return before update
+    return { cached };
+  }
+
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
+    // update the info of restaurant when save the popup
+    onMutate({ name, description }) {
+      if (name !== null && description !== null) {
+        const { cached } = updateManagedRestaurantCache({ name, description });
+        return { previousProfile: cached };
+      }
+    },
+    onError(_, __, context) {
+      // all things I return from onMutate is show in the variable context
+
+      // If is error it'll return to the old data
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(context.previousProfile);
+      }
+    },
   });
 
   async function handleUpdateProfile(data: StoreProfileSchema) {
