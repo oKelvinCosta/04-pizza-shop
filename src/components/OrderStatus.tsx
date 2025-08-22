@@ -26,7 +26,7 @@ const orderStatusMap: Record<
     color: "bg-amber-500",
   },
   delivering: {
-    value: "Em Entrega",
+    value: "Em entrega",
     color: "bg-orange-500",
   },
   delivered: {
@@ -39,6 +39,7 @@ export default function OrderStatus({ status }: OrderStatusProps) {
   return (
     <div className="flex items-center gap-2">
       <span
+        data-testid="badge"
         className={`h-2 w-2 rounded-full ${orderStatusMap[status].color}`}
       />
       <span className="text-muted-foreground font-medium">
