@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSearchParams } from "react-router-dom";
 
 const orderFiltersSchema = z.object({
   orderId: z.string().optional(),
@@ -61,6 +62,7 @@ export default function OrderTableFilters() {
 
       // When I filter, the page should be reset to 1
       state.set("page", "1");
+      return state;
     });
   }
 

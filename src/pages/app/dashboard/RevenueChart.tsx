@@ -40,8 +40,12 @@ export default function RevenueChart() {
     to: new Date(),
   });
 
-  const { data: dailyRevenueInPeriod } = useQuery({
-    queryKey: ["metrics", "daily-receipt-in-preiod", dateRange],
+  const {
+    data: dailyRevenueInPeriod,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["metrics", "daily-receipt-in-period", dateRange],
     queryFn: () =>
       getDailyRevenueInPeriod({
         from: dateRange?.from,
@@ -50,13 +54,32 @@ export default function RevenueChart() {
   });
 
   const chartData = useMemo(() => {
-    return dailyRevenueInPeriod?.map((chartItem) => {
-      return {
-        date: chartItem.date,
-        receipt: chartItem.receipt / 100,
-      };
-    });
+    if (!dailyRevenueInPeriod || !Array.isArray(dailyRevenueInPeriod)) {
+      console.error("Invalid dailyRevenueInPeriod data:", dailyRevenueInPeriod);
+      return [];
+    }
+
+    return dailyRevenueInPeriod.map((chartItem) => ({
+      date: chartItem.date,
+      receipt: chartItem.receipt / 100,
+    }));
   }, [dailyRevenueInPeriod]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loader2 className="text-muted-foreground h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-full items-center justify-center text-red-500">
+        Error loading revenue data
+      </div>
+    );
+  }
 
   return (
     <Card className="col-span-6">

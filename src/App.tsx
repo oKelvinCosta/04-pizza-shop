@@ -7,7 +7,7 @@ import { toast, Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { queryClient } from "@/lib/ReactQuery";
 
-import { router } from "./Routes";
+import { router } from "./routes";
 
 function App() {
   return (

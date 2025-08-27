@@ -15,6 +15,7 @@ import {
 import OrderTableFilters from "./OrderTableFilters";
 import OrderTableRow from "./OrderTableRow";
 import { OrderTableSkeleton } from "./OrderTableSkeleton";
+import { useEffect } from "react";
 
 export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,9 +42,10 @@ export default function Orders() {
   });
 
   function handlePaginate(pageIndex: number) {
-    setSearchParams((prev) => {
-      prev.set("page", (pageIndex + 1).toString());
-      return prev;
+    setSearchParams((state) => {
+      state.set("page", (pageIndex + 1).toString());
+
+      return state;
     });
   }
 

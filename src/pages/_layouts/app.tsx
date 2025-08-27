@@ -19,6 +19,8 @@ export default function AppLayout() {
           if (status === 401 && code === "UNAUTHORIZED") {
             // replace true = user can't go back to the sign-in page using the back button from the browser
             navigate("/sign-in", { replace: true });
+          } else {
+            throw error;
           }
         }
       },

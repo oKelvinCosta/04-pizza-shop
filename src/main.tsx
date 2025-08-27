@@ -3,8 +3,14 @@ import { createRoot } from "react-dom/client";
 
 import App from "./App.tsx";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+import { enableMSW } from "./api/mocks";
+
+// If not a test environment, enable MSW
+// If is a test environment, use then() to wait for the MSW to be enabled
+enableMSW().then(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+});
