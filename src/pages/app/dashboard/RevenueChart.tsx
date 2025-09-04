@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
+import type { DateRange } from "react-day-picker";
 
 // const data = [
 //   { date: "10/12", revenue: 1200 },

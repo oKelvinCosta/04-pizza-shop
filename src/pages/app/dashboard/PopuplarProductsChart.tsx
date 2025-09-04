@@ -6,13 +6,13 @@ import colors from "tailwindcss/colors";
 import { getPopularProducts } from "@/api/GetPopularProducts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const data = [
-  { product: "Pepperoni", amount: 40 },
-  { product: "Mussarela", amount: 30 },
-  { product: "Marguerita", amount: 50 },
-  { product: "4 Queijos", amount: 16 },
-  { product: "Frango frito", amount: 26 },
-];
+// const data = [
+//   { product: "Pepperoni", amount: 40 },
+//   { product: "Mussarela", amount: 30 },
+//   { product: "Marguerita", amount: 50 },
+//   { product: "4 Queijos", amount: 16 },
+//   { product: "Frango frito", amount: 26 },
+// ];
 
 const COLORS = [
   colors.sky[500],
@@ -66,8 +66,10 @@ export default function PopularProductsChart() {
 
                   const RADIAN = Math.PI / 180;
                   const radius = 12 + innerRadius + (outerRadius - innerRadius);
-                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                  const x =
+                    cx + radius * Math.cos(midAngle ? -midAngle * RADIAN : 0);
+                  const y =
+                    cy + radius * Math.sin(midAngle ? -midAngle * RADIAN : 0);
 
                   return (
                     <text

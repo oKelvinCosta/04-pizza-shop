@@ -15,7 +15,6 @@ import {
 import OrderTableFilters from "./OrderTableFilters";
 import OrderTableRow from "./OrderTableRow";
 import { OrderTableSkeleton } from "./OrderTableSkeleton";
-import { useEffect } from "react";
 
 export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams();

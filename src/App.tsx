@@ -2,7 +2,7 @@ import "./global.css";
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { queryClient } from "@/lib/ReactQuery";

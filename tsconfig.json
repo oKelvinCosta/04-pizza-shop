@@ -10,6 +10,6 @@
       "@/*": ["./src/*"]
     },
     "types": ["vitest/globals"]
-  },
-  "include": ["src", "test"]
+  }
+  // "include": ["src", "test"]
 }

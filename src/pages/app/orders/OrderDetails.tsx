@@ -95,7 +95,7 @@ export default function OrderDetails({ orderId, open }: OrderDetailsProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {order.orderItems.map((item) => (
+              {order.orderItems.map((item: any) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.product.name}</TableCell>
                   <TableCell className="text-right">{item.quantity}</TableCell>

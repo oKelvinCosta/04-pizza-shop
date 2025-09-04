@@ -3,7 +3,6 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 /// <reference types="vitest/config" />
 import { defineConfig } from "vitest/config";
-import type { InlineConfig, UserConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
