@@ -7,7 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MetricCardSkeleton } from "./MetricCardSkeleton";
 
 export function MonthOrdersAmountCard() {
-  const { data: monthOrderAmount, isError } = useQuery({
+  const {
+    data: monthOrderAmount,
+    isError,
+    isPending,
+  } = useQuery({
     queryKey: ["metrics", "month-orders-amount"],
     queryFn: getMonthOrdersAmount,
   });
@@ -22,7 +26,7 @@ export function MonthOrdersAmountCard() {
           <div className="text-muted-foreground text-sm">
             Dados não disponíveis no momento
           </div>
-        ) : monthOrderAmount ? (
+        ) : monthOrderAmount && !isPending ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {monthOrderAmount.amount.toLocaleString("pt-BR")}

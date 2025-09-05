@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MetricCardSkeleton } from "./MetricCardSkeleton";
 
 export function MonthCanceledOrdersAmountCard() {
-  const { data: monthCanceledOrdersAmount } = useQuery({
+  const { data: monthCanceledOrdersAmount, isPending } = useQuery({
     queryKey: ["metrics", "month-canceled-orders-amount"],
     queryFn: getMonthCanceledOrdersAmount,
   });
@@ -20,7 +20,7 @@ export function MonthCanceledOrdersAmountCard() {
         <DollarSign className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="space-y-1">
-        {monthCanceledOrdersAmount ? (
+        {monthCanceledOrdersAmount && !isPending ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {monthCanceledOrdersAmount.amount.toLocaleString("pt-BR")}

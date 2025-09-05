@@ -23,7 +23,7 @@ const COLORS = [
 ];
 
 export default function PopularProductsChart() {
-  const { data: popularProducts } = useQuery({
+  const { data: popularProducts, isPending } = useQuery({
     queryKey: ["metrics", "popular-products"],
     queryFn: getPopularProducts,
   });
@@ -39,7 +39,7 @@ export default function PopularProductsChart() {
         </div>
       </CardHeader>
       <CardContent>
-        {popularProducts ? (
+        {popularProducts && !isPending ? (
           <ResponsiveContainer width="100%" height={240}>
             <PieChart style={{ fontSize: 12 }}>
               <Pie
