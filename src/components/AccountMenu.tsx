@@ -78,7 +78,7 @@ export default function AccountMenu() {
 
           <div>
             <DialogTrigger asChild>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Building className="mr-2 h-4 w-4" />
                 <span>Perfil da loja</span>
               </DropdownMenuItem>
@@ -88,7 +88,10 @@ export default function AccountMenu() {
               disabled={isSigningOut}
               className="text-rose-500 dark:text-rose-400"
             >
-              <button className="w-full" onClick={() => signOutFn()}>
+              <button
+                className="w-full cursor-pointer"
+                onClick={() => signOutFn()}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Sair</span>
               </button>

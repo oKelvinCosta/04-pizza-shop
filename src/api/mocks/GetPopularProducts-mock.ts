@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 
 import type { GetPopularProductsResponse } from "../GetPopularProducts";
 
@@ -6,7 +6,8 @@ export const getPopularProductsMock = http.get<
   never,
   never,
   GetPopularProductsResponse
->("/metrics/popular-products", () => {
+>("/metrics/popular-products", async () => {
+  await delay(2000);
   return HttpResponse.json([
     { product: "Pizza 01", amount: 5 },
     { product: "Pizza 02", amount: 3 },

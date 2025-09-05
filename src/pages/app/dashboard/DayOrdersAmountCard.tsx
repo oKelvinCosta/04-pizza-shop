@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MetricCardSkeleton } from "./MetricCardSkeleton";
 
 export function DayOrdersAmountCard() {
-  const { data: dayOrderAmount } = useQuery({
+  const { data: dayOrderAmount, isPending } = useQuery({
     queryKey: ["metrics", "day-orders-amount"],
     queryFn: getDayOrdersAmount,
   });
@@ -19,7 +19,7 @@ export function DayOrdersAmountCard() {
         <Utensils className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="space-y-1">
-        {dayOrderAmount ? (
+        {dayOrderAmount && !isPending ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {dayOrderAmount.amount.toLocaleString("pt-BR")}

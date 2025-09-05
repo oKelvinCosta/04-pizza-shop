@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -8,6 +8,9 @@ import { signIn } from "@/api/SignIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { env } from "@/env";
+
+import { testMode } from "@/lib/utils-test";
 
 const signInForm = z.object({
   email: z.string().email("E-mail inválido"),
@@ -16,6 +19,8 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>;
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
 
   const {
@@ -38,24 +43,34 @@ export default function SignIn() {
   });
 
   async function delay() {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 800));
   }
 
   async function handleSignIn(data: SignInForm) {
     try {
       await authenticate({ email: data.email });
 
-      console.log(data);
-      await delay();
+      // console.log(data);
 
-      toast.success("Verifique seu e-mail para realizar a autenticação.", {
-        action: {
-          label: "Verificar",
-          onClick: () => {
-            handleSignIn(data);
+      if (env.MODE === "test") {
+        toast.success("E-mail verificado clique para continuar >>", {
+          action: {
+            label: "Continuar",
+            onClick: () => {
+              navigate("/");
+            },
           },
-        },
-      });
+        });
+      } else {
+        toast.success("Verifique seu e-mail para realizar a autenticação.", {
+          action: {
+            label: "Verificar",
+            onClick: () => {
+              handleSignIn(data);
+            },
+          },
+        });
+      }
     } catch {
       toast.error("Erro ao realizar login.");
     }
@@ -74,6 +89,7 @@ export default function SignIn() {
           <h1 className="text-2xl font-semibold tracking-tight">
             Acessar painel
           </h1>
+          {testMode("Modo de teste, use: okelvincosta@gmail.com")}
           <p className="text-muted-foreground text-sm">
             Acompanhe suas vendas pelo painel do parceiro!
           </p>

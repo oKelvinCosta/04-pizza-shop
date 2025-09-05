@@ -18,9 +18,11 @@ import { approveOrderMock } from "./ApproveOrder-mock";
 import { cancelOrderMock } from "./CancelOrder-mock";
 import { deliverOrderMock } from "./DeliverOrder-mock";
 import { dispatchOrderMock } from "./DispatchOrder-mock";
+import { signOutMock } from "./SignOut-mock";
 
 export const worker = setupWorker(
   signInMock,
+  signOutMock,
   registerRestaurantMock,
   getDayOrdersAmountMock,
   getMonthOrdersAmountMock,

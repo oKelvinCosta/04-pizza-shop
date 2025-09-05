@@ -8,6 +8,7 @@ import { registerRestaurant } from "@/api/RegisterRestaurant";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { testMode } from "@/lib/utils-test";
 
 const signUpForm = z.object({
   restaurantName: z.string(),
@@ -72,6 +73,7 @@ export default function SignUp() {
           <h1 className="text-2xl font-semibold tracking-tight">
             Criar conta grátis
           </h1>
+          {testMode("Use nome do estabelecimento: Pizza Shop")}
           <p className="text-muted-foreground text-sm">
             Seja um parceiro e comece suas vendas!
           </p>

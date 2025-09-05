@@ -23,6 +23,7 @@ import {
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import { testMode } from "@/lib/utils-test";
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
@@ -109,6 +110,7 @@ export default function StoreProfileDialog() {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Perfil da loja</DialogTitle>
+        {testMode("Use nome: Rocket Pizza")}
         <DialogDescription>
           Atualize as informações do seu estabelecimento visíveis ao seu cliente
         </DialogDescription>

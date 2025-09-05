@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 
 import type { GetOrdersResponse } from "../GetOrders";
 
@@ -27,6 +27,7 @@ const orders: Orders = Array.from({ length: 60 }).map((_, i) => {
 export const getOrdersMock = http.get<never, never, GetOrdersResponse>(
   "/orders",
   async ({ request }) => {
+    await delay(2000);
     const { searchParams, search } = new URL(request.url);
 
     const pageIndex = searchParams.get("paramIndex")

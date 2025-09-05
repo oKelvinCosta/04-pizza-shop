@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MetricCardSkeleton } from "./MetricCardSkeleton";
 
 export function MonthOrdersAmountCard() {
-  const { data: monthOrderAmount } = useQuery({
+  const { data: monthOrderAmount, isError } = useQuery({
     queryKey: ["metrics", "month-orders-amount"],
     queryFn: getMonthOrdersAmount,
   });
@@ -18,7 +18,11 @@ export function MonthOrdersAmountCard() {
         <Utensils className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="space-y-1">
-        {monthOrderAmount ? (
+        {isError ? (
+          <div className="text-muted-foreground text-sm">
+            Dados não disponíveis no momento
+          </div>
+        ) : monthOrderAmount ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {monthOrderAmount.amount.toLocaleString("pt-BR")}
@@ -33,7 +37,7 @@ export function MonthOrdersAmountCard() {
                   {monthOrderAmount.diffFromLastMonth}%
                 </span>
               )}
-              em relação ao mês passado ontem
+              em relação ao mês passado
             </p>
           </>
         ) : (
